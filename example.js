@@ -1,30 +1,6 @@
-# async-promise-queue
-
-A wrapper around the `async` module, that provides an improved promise queue.
-
-Some highlights:
-
-* promiseified method (all wired up)
-* in a failure scenario, it will wait for pending work before rejecting. This prevents the run-away work problem.
-
-## Usage
-
-```sh
-npm install async-promise-queue
-```
-
-or
-
-```sh
-yarn add async-promise-queue
-```
-
-## Example
-
-```js
 'use strict';
 
-const queue = require('async-promise-queue');
+const queue = require('./');
 
 // the example worker
 const worker = queue.async.asyncify(function(work) {
@@ -48,4 +24,3 @@ const work = [
 queue(worker, work, 3)
   .catch(reason => console.error(reason))
   .then(value   => console.log('complete!!', value))
-```
