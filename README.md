@@ -1,5 +1,7 @@
 # async-promise-queue
 
+[![Build Status](https://travis-ci.org/stefanpenner/async-promise-queue.svg?branch=master)](https://travis-ci.org/stefanpenner/async-promise-queue)
+
 A wrapper around the `async` module, that provides an improved promise queue.
 
 Some highlights:
