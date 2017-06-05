@@ -1,5 +1,20 @@
 {
   "dependencies": {
     "async": "^2.4.1"
+  },
+  "name": "async-promise-queue",
+  "version": "1.0.0",
+  "description": "wrapper around async.queue to make some common usages simpler",
+  "main": "index.js",
+  "repository": "https://github.com/stefanpenner/async-promise-queue",
+  "author": "Stefan Penner <stefan.penner@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "chai-as-promised": "^6.0.0",
+    "mocha": "^3.4.2"
   }
 }
