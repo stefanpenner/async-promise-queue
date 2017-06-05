@@ -12,6 +12,58 @@ describe('behavior', function() {
     });
   });
 
+  it('handles the run away work problem (all fail)', function() {
+    let one, two, three, four = false;
+    const thrownError = new Error('some error');
+    // the work
+    const work = [
+      {
+        cb() {
+          one = true;
+          throw thrownError;
+        },
+        file:'/path-1',
+        duration: 0
+      },
+      {
+        cb() {
+          two = true;
+          throw thrownError;
+        },
+        file:'/path-2',
+        duration: 0
+      },
+      {
+        cb() {
+          three = true;
+          throw thrownError;
+        },
+        file:'/path-3',
+        duration: 0
+      },
+
+      {
+        cb() {
+          four = true;
+        },
+        file:'/path-4',
+        duration: 0
+      },
+    ];
+
+    // calling our queue helper
+    return queue(worker, work, 3)
+      .then(value  => expect(true).to.eql(false), // should never get here
+        reason => expect(reason).to.eql(thrownError))
+      .then(() => {
+        // assert the work we expect to be done is done, but nothing more
+        expect(one, 'first job should have executed').to.eql(true);
+        expect(two, 'second job should have executed').to.eql(true);
+        expect(three, 'third job should have executed').to.eql(true);
+        expect(four, 'fourth job should have executed').to.eql(false);
+      });
+  });
+
   it('handles the run away work problem', function() {
 
     let one, two, three, four = false;
@@ -62,7 +114,6 @@ describe('behavior', function() {
         expect(four, 'fourth job should have executed').to.eql(false);
       });
   });
-
 
   it('works correctly when everything is wonderful', function() {
     // the example worker
