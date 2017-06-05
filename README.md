@@ -28,6 +28,8 @@ yarn add async-promise-queue
 
 const queue = require('async-promise-queue');
 
+queue.async // a reference to the `async` module which `async-promise-queue` is requiring.
+
 // the example worker
 const worker = queue.async.asyncify(function(work) {
   console.log('work', work.file);
