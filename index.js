@@ -2,9 +2,9 @@
 
 // helper function that promisifies the queue
 module.exports = function queue(worker, work, concurrency) {
-  return new Promise((resolve, reject) => {
-    let q = require('async').queue(worker, concurrency);
-    let firstError;
+  return new Promise(function(resolve, reject) {
+    var q = require('async').queue(worker, concurrency);
+    var firstError;
     q.drain = resolve;
     q.error = function(error) {
       if (firstError === undefined) {
@@ -26,7 +26,7 @@ module.exports = function queue(worker, work, concurrency) {
 };
 
 Object.defineProperty(module.exports, 'async', {
-  get() {
+  get: function() {
     return require('async');
   }
 });

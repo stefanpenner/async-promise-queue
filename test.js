@@ -1,24 +1,24 @@
 'use strict';
-const queue = require('./');
-const chai = require('chai');
-const expect = chai.expect;
+var queue = require('./');
+var chai = require('chai');
+var expect = chai.expect;
 
 describe('behavior', function() {
   // the example worker
-  const worker = queue.async.asyncify(function(work) {
-    return new Promise(resolve => {
+  var worker = queue.async.asyncify(function(work) {
+    return new Promise(function(resolve) {
       work.cb();
       setTimeout(resolve, work.duration);
     });
   });
 
   it('handles the run away work problem (all fail)', function() {
-    let one, two, three, four = false;
-    const thrownError = new Error('some error');
+    var one, two, three, four = false;
+    var thrownError = new Error('some error');
     // the work
-    const work = [
+    var work = [
       {
-        cb() {
+        cb: function() {
           one = true;
           throw thrownError;
         },
@@ -26,7 +26,7 @@ describe('behavior', function() {
         duration: 0
       },
       {
-        cb() {
+        cb: function() {
           two = true;
           throw thrownError;
         },
@@ -34,7 +34,7 @@ describe('behavior', function() {
         duration: 0
       },
       {
-        cb() {
+        cb: function() {
           three = true;
           throw thrownError;
         },
@@ -43,7 +43,7 @@ describe('behavior', function() {
       },
 
       {
-        cb() {
+        cb: function() {
           four = true;
         },
         file:'/path-4',
@@ -53,9 +53,9 @@ describe('behavior', function() {
 
     // calling our queue helper
     return queue(worker, work, 3)
-      .then(value  => expect(true).to.eql(false), // should never get here
-        reason => expect(reason).to.eql(thrownError))
-      .then(() => {
+      .then(function(value) { return expect(true).to.eql(false); }, // should never get here
+        function(reason) { return expect(reason).to.eql(thrownError); })
+      .then(function() {
         // assert the work we expect to be done is done, but nothing more
         expect(one, 'first job should have executed').to.eql(true);
         expect(two, 'second job should have executed').to.eql(true);
@@ -66,19 +66,19 @@ describe('behavior', function() {
 
   it('handles the run away work problem', function() {
 
-    let one, two, three, four = false;
-    const thrownError = new Error('some error');
+    var one, two, three, four = false;
+    var thrownError = new Error('some error');
     // the work
-    const work = [
+    var work = [
       {
-        cb() {
+        cb: function() {
           one = true;
         },
         file:'/path-1',
         duration: 50
       },
       {
-        cb() {
+        cb: function() {
           two = true;
           throw thrownError;
         },
@@ -86,7 +86,7 @@ describe('behavior', function() {
         duration: 0
       },
       {
-        cb() {
+        cb: function() {
           three = true;
         },
         file:'/path-3',
@@ -94,7 +94,7 @@ describe('behavior', function() {
       },
 
       {
-        cb() {
+        cb: function() {
           four = true;
         },
         file:'/path-4',
@@ -104,9 +104,9 @@ describe('behavior', function() {
 
     // calling our queue helper
     return queue(worker, work, 3)
-      .then(value  => expect(true).to.eql(false), // should never get here
-        reason => expect(reason).to.eql(thrownError))
-      .then(() => {
+      .then(function(value) { return expect(true).to.eql(false); }, // should never get here
+        function(reason) { return expect(reason).to.eql(thrownError); })
+      .then(function() {
         // assert the work we expect to be done is done, but nothing more
         expect(one, 'first job should have executed').to.eql(true);
         expect(two, 'second job should have executed').to.eql(true);
@@ -117,33 +117,33 @@ describe('behavior', function() {
 
   it('works correctly when everything is wonderful', function() {
     // the example worker
-    let one, two, three, four = false;
+    var one, two, three, four = false;
 
     // the work
-    const work = [
+    var work = [
       {
-        cb() {
+        cb: function() {
           one = true;
         },
         file: '/path-1',
         duration: 50
       },
       {
-        cb() {
+        cb: function() {
           two = true;
         },
         file: '/path-2',
         duration: 0
       },
       {
-        cb() {
+        cb: function() {
           three = true;
         },
         file: '/path-3',
         duration: 0
       },
       {
-        cb() {
+        cb: function() {
           four = true;
         },
         file: '/path-4',
@@ -153,8 +153,8 @@ describe('behavior', function() {
 
     // calling our queue helper
     return queue(worker, work, 3)
-      .then(value  => expect(value).to.eql(undefined))
-      .then(() => {
+      .then(function(value) { return expect(value).to.eql(undefined); })
+      .then(function() {
         // assert the work we expect to be done is done, but nothing more
         expect(one,   'first job should have executed').to.eql(true);
         expect(two,   'second job should have executed').to.eql(true);
