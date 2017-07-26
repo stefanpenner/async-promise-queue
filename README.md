@@ -21,6 +21,14 @@ or
 yarn add async-promise-queue
 ```
 
+### Debug logging
+
+```
+DEBUG="async-promise-queue*" node <your program>
+```
+
+And you will be informed when a queue is used, and what its concurrency becomes (note: we can always add more logging, submit your ideas as pull requests!)
+
 ## Example
 
 ```js
