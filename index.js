@@ -1,7 +1,9 @@
 'use strict';
+var debug = require('debug')('async-promise-queue:');
 
 // helper function that promisifies the queue
 module.exports = function queue(worker, work, concurrency) {
+  debug('started, with concurrency=' + concurrency)
   return new Promise(function(resolve, reject) {
     var q = require('async').queue(worker, concurrency);
     var firstError;
