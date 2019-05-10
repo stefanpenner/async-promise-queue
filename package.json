@@ -4,7 +4,7 @@
     "debug": "^2.6.8"
   },
   "name": "async-promise-queue",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "wrapper around async.queue to make some common usages simpler",
   "main": "index.js",
   "repository": "https://github.com/stefanpenner/async-promise-queue",
